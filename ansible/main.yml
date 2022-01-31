@@ -1,0 +1,65 @@
+- name: Create Azure VM
+  hosts: localhost
+  connection: local
+  tasks:
+  - name: Create resource group
+    azure_rm_resourcegroup:
+      name: myResourceGroup
+      location: eastus
+  - name: Create virtual network
+    azure_rm_virtualnetwork:
+      resource_group: myResourceGroup
+      name: myVnet
+      address_prefixes: "10.0.0.0/16"
+  - name: Add subnet
+    azure_rm_subnet:
+      resource_group: myResourceGroup
+      name: mySubnet
+      address_prefix: "10.0.1.0/24"
+      virtual_network: myVnet
+  - name: Create public IP address
+    azure_rm_publicipaddress:
+      resource_group: myResourceGroup
+      allocation_method: Static
+      name: myPublicIP
+    register: output_ip_address
+  - name: Public IP of VM
+    debug:
+      msg: "The public IP is {{ output_ip_address.state.ip_address }}."
+  - name: Create Network Security Group that allows SSH
+    azure_rm_securitygroup:
+      resource_group: myResourceGroup
+      name: myNetworkSecurityGroup
+      rules:
+        - name: SSH
+          source_address_prefix: Internet
+          source_port_range: "*"
+          protocol: Tcp
+          destination_port_range: 22
+          access: Deny
+          priority: 1001
+          direction: Inbound
+  - name: Create virtual network interface card
+    azure_rm_networkinterface:
+      resource_group: myResourceGroup
+      name: myNIC
+      virtual_network: myVnet
+      subnet: mySubnet
+      public_ip_name: myPublicIP
+      security_group: myNetworkSecurityGroup
+  - name: Create VM
+    azure_rm_virtualmachine:
+      resource_group: myResourceGroup
+      name: myVM
+      vm_size: Standard_DS1_v2
+      admin_username: azureuser
+      ssh_password_enabled: false
+      ssh_public_keys:
+        - path: /home/azureuser/.ssh/authorized_keys
+          key_data: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDRv4RMETvk2FLYPdzfrX20VazHloFnHn4Rj5YYdbCfNHVqECkIxvqMLb99BjMaS13zi71HK69E+1OtfOutU6W+dtNq6OchxJJF+5IL7ov+rwVat5I6vAgwQ9TtXcwKurvLm3Rr4ItPf3youn63Rp+k9Q5I8lpQrkQ5l3xhjp0zmXynbxMId/7CE6K9pUsoLADtUWJR4TU9s2rS6WBKQjVVJSrUdAe9QsHDQdXA3knW8VX1Kf4h9dlB3Kxb/E0QwkU3WERceA61rtzNRTJZLz0Q531cBJJUAkQyU/32/Plq6JvbpQol4II8Ism1MquTDEbz8cobT2LLy5reLZcDD0at jaygordon@Jays-MacBook-Pro.local"
+      network_interfaces: myNIC
+      image:
+        offer: CentOS
+        publisher: OpenLogic
+        sku: '7.5'
+        version: latest

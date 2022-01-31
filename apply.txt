@@ -1,0 +1,15 @@
+terraform apply main.tfplan
+
+az group create --name exampleRG --location eastus
+
+az deployment group create --resource-group exampleRG --template-file main.bicep --parameters storageName=jagordstorage01
+
+
+az group create --name ExampleGroup --location "Central US"
+az deployment group create \
+  --name ExampleDeployment \
+  --resource-group ExampleGroup \
+  --template-file azuredeploy.json \
+  --parameters storageAccountType=Standard_GRS
+
+ansible-playbook main.yml  -vvvv
