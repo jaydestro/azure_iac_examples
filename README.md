@@ -1,4 +1,4 @@
-**# Azure Infrastructure as Code Examples**
+** Azure Infrastructure as Code Examples**
 
 This is a repo with examples of IaC you can deploy from the Azure Cloud Shell.  These commands work with either the bash or PowerShell offerings of Cloud Shell.  
 
