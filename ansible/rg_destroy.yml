@@ -6,5 +6,6 @@
         name: "{{ name }}"
         state: absent
       register: rg
+      force_delete_nonempty: yes
     - debug:
         var: rg
