@@ -1,13 +1,17 @@
-The Bicep Manager template guide will show you how to create an Azure Resource Group and an Azure Storage Account.  You'll use the `bicep` command in a bash or PowerShell Cloud Shell session.  Once you've completed this deployment you will delete the resource group to clean up any used resources. Full documentation on this procedure can be reviewed in the Microsoft Docs article [Quickstart: Create Bicep files with Visual Studio Code](https://cda.ms/3Nr).
+The Bicep Manager template guide will show you how to create an Azure Resource Group and an Azure Storage Account.  You'll use the `az deployment` command in a bash or PowerShell Cloud Shell session.  Once you've completed this deployment you will delete the resource group to clean up any used resources. Full documentation on this procedure can be reviewed in the Microsoft Docs article [Quickstart: Create Bicep files with Visual Studio Code](https://cda.ms/3Nr).
 
 To deploy a Bicep file or ARM template, you need write access on the resources you're deploying and access to all operations on the Microsoft.Resources/deployments resource type. For example, to deploy a virtual machine, you need `Microsoft.Compute/virtualMachines/write` and `Microsoft.Resources/deployments/*` permissions.
 
+## Deploy
+
+**Clone this repo in Azure Cloud Shell and enter the bicep directory**
+
 ```bash
 git clone git@github.com:jaydestro/azure_iac_examples.git
-cd azure_iac_examples/arm
+cd azure_iac_examples/bicep
 ```
 
-The [azuredeploy.json](./azuredeploy.json) contains instructions to create a storage account.  There are no modifications required to this template as our parameters are specified in the `az deployment` command.
+The [main.json](./azuredeploy.json) contains instructions to create a storage account.  There are no modifications required to this template as our parameters are specified in the `az deployment` command.
 
 ```bash
 az group create --name ExampleGroup --location eastus
