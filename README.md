@@ -11,3 +11,7 @@ The Ansible guide will give you an example of creating an Azure Resource Group, 
 ## [Azure Resource Manager Template](arm/)
 
 The Azure Resource Manager template guide will show you how to create an Azure Resource Group and an Azure Storage Account.  You'll use the `az` command in a bash or PowerShell Cloud Shell session.  Once you've completed this deployment you will delete the resource group to clean up any used resources. Full documentation on this procedure can be reviewed in the Microsoft Docs article [How to use Azure Resource Manager (ARM) deployment templates with Azure CLI.](https://cda.ms/3N0)
+
+## [Bicep](bicep/)
+
+The Bicep Manager template guide will show you how to create an Azure Resource Group and an Azure Storage Account.  You'll use the `bicep` command in a bash or PowerShell Cloud Shell session.  Once you've completed this deployment you will delete the resource group to clean up any used resources. Full documentation on this procedure can be reviewed in the Microsoft Docs article [Quickstart: Create Bicep files with Visual Studio Code](https://cda.ms/3Nr).
